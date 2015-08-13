@@ -50,6 +50,8 @@ function dprimeABX(H::Real, FA::Real, method::String)
     elseif method == "IO"
         estdp(dp) = pcUnb - cdf(Normal(), dp/root2)*cdf(Normal(), dp/2) - cdf(Normal(), -dp/root2)*cdf(Normal(), -dp/2)
         dprime = fzero(estdp, [0, 10])
+    else
+        error("`method` must be either 'diff', or 'IO'")
     end
 
     return dprime
@@ -211,6 +213,8 @@ function dprimeSD(H::Real, FA::Real, method::String)
             val = 2 * quantile(Normal(), 0.5 * (1 + sqrt(2 * pcMax - 1)))
         end
         dprime = dp_sign*val
+    else
+        error("`method` must be either 'diff', or 'IO'")
     end
 
     return dprime
