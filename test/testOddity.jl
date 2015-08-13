@@ -3,9 +3,9 @@ using Base.Test, SDT, HDF5
 testType = "short"
 
 if testType == "short"
-    PC = [(1/3)+0.01: 0.01: 0.99]
+    PC = collect((1/3)+0.01: 0.01: 0.99)
 elseif testType == "long"
-    PC = [(1/3)+0.001: 0.001: 0.999]
+    PC = collect((1/3)+0.001: 0.001: 0.999)
 end
 nPC = length(PC)
 

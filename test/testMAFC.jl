@@ -3,13 +3,13 @@ using Base.Test, SDT, HDF5
 testType = "short"
 
 if testType == "short"
-    PC = [0.01:0.01:0.99]
+    PC = collect(0.01:0.01:0.99)
 elseif testType == "long"
-    PC = [0.001:0.001:0.999]
+    PC = collect(0.001:0.001:0.999)
 end
 
 nPC = length(PC)
-alt = [2:1:10]
+alt = collect(2:1:10)
 nAlt = length(alt)
 
 dps = zeros(nAlt, nPC)

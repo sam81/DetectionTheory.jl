@@ -3,11 +3,11 @@ using Base.Test, SDT, HDF5
 testType = "short"
 
 if testType == "short"
-    PH = [0.01:0.01:0.99]
-    PF = [0.01:0.01:0.99]
+    PH = collect(0.01:0.01:0.99)
+    PF = collect(0.01:0.01:0.99)
 elseif testType == "long"
-    PH = [0.001:0.001:0.999]
-    PF = [0.001:0.001:0.999]
+    PH = collect(0.001:0.001:0.999)
+    PF = collect(0.001:0.001:0.999)
 end
 
 nPH = length(PH); nPF = length(PF); nTot=nPH*nPF
