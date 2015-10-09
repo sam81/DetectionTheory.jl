@@ -14,7 +14,7 @@ Compute d' for an ABX task from 'hit' and 'false alarm' rates.
 
 * `H::Real`: Hit rate.
 * `FA::Real` : False alarm rate.
-* `method::String`: 'diff' for differencing strategy or 'IO' for independent observations strategy.
+* `method::ASCIIString`: 'diff' for differencing strategy or 'IO' for independent observations strategy.
 
 ##### Returns
 
@@ -27,7 +27,7 @@ Compute d' for an ABX task from 'hit' and 'false alarm' rates.
     #differencing model
     dp = dprimeABX(0.7, 0.2, "diff")
 """ ->
-function dprimeABX(H::Real, FA::Real, method::String)
+function dprimeABX(H::Real, FA::Real, method::ASCIIString)
 
     if H < 0 || H > 1
         error("H must be between 0 and 1")
@@ -172,7 +172,7 @@ Compute d' for one interval same/different task from 'hit' and 'false alarm' rat
 
 * `H::Real`: Hit rate.
 * `FA::Real` : False alarm rate.
-* `method::String`: 'diff' for differencing strategy or 'IO' for independent observations strategy.
+* `method::ASCIIString`: 'diff' for differencing strategy or 'IO' for independent observations strategy.
 
 ##### Returns
 
@@ -185,7 +185,7 @@ Compute d' for one interval same/different task from 'hit' and 'false alarm' rat
     #differencing model
     dp = dprimeSD(0.7, 0.2, "diff")
 """ ->
-function dprimeSD(H::Real, FA::Real, method::String)
+function dprimeSD(H::Real, FA::Real, method::ASCIIString)
 
     if H < 0 || H > 1
         error("H must be between 0 and 1")
