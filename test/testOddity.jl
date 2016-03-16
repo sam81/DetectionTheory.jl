@@ -12,7 +12,7 @@ nPC = length(PC)
 dpOddity = zeros(nPC)
 
 for i=1:nPC
-    dpOddity[i] = dprimeOddity(PC[i])
+    dpOddity[i] = dprimeOddity(PC[i], "diff")
 end
 
 fid = h5open("table_oddity.h5", "r")

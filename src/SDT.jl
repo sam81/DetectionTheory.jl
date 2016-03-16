@@ -8,6 +8,8 @@ using Roots
 VERSION < v"0.4-" && using Docile
 
 @doc doc"""
+### dprimeABX(H::Real, FA::Real, method::ASCIIString)
+
 Compute d' for an ABX task from 'hit' and 'false alarm' rates.
 
 ##### Arguments
@@ -26,7 +28,7 @@ Compute d' for an ABX task from 'hit' and 'false alarm' rates.
     dp = dprimeABX(0.7, 0.2, "IO")
     #differencing model
     dp = dprimeABX(0.7, 0.2, "diff")
-""" ->
+"""->
 function dprimeABX(H::Real, FA::Real, method::ASCIIString)
 
     if H < 0 || H > 1
@@ -35,7 +37,7 @@ function dprimeABX(H::Real, FA::Real, method::ASCIIString)
     if FA < 0 || FA > 1
         error("FA must be between 0 and 1")
     end
-    
+
     zdiff = quantile(Normal(), H) - quantile(Normal(), FA)
     pcUnb = cdf(Normal(), zdiff/2)
 
@@ -61,6 +63,8 @@ end
 
 
 @doc doc"""
+### dprimeMAFC(pc::Real, m::Integer)
+
 Compute d' corresponding to a certain proportion of correct
 responses in m-AFC tasks.
 
@@ -77,7 +81,7 @@ responses in m-AFC tasks.
 
     dp = dprimeMAFC(0.7, 3)
 
-""" ->
+"""->
 function dprimeMAFC(pc::Real, m::Integer)
 
     if m < 2
@@ -87,10 +91,10 @@ function dprimeMAFC(pc::Real, m::Integer)
     if pc <= 0 || pc >= 1
         error("pc must be in (0,1)")
     end
- 
+
     estdp = function(dp)
         pr = function(x)
-            pdf(Normal(), x-dp) * cdf(Normal(), x)^(m-1)   
+            pdf(Normal(), x-dp) * cdf(Normal(), x)^(m-1)
         end
         pc - quadgk(pr, -Inf, Inf)[1]
     end
@@ -99,11 +103,14 @@ function dprimeMAFC(pc::Real, m::Integer)
 end
 
 @doc doc"""
-Compute d' for an oddity task.
+### dprimeOddity(pc::Real, method::ASCIIString)
+
+Compute d' for an odd-one-out task.
 
 ##### Arguments
 
 * `pc::Real`: Proportion of correct responses.
+* `method::ASCIIString`: 'diff' for differencing strategy or 'IO' for independent observations strategy.
 
 ##### Returns
 
@@ -111,30 +118,49 @@ Compute d' for an oddity task.
 
 ##### Examples
 
-    dp = dprimeOddity(0.7)
+    dp = dprimeOddity(0.7, "diff")
+    dp = dprimeOddity(0.7, "IO")
 
-""" ->
-function dprimeOddity(pc::Real)
+"""->
+
+function dprimeOddity(pc::Real, method::ASCIIString)
 
     if pc < 1/3
         error("pc must be greater than 1/3")
     end
-    root3 = sqrt(3)
-    root2Over3 = sqrt(2)/root3
-    
-    estdp = function(dp)
-        pr = function(x)
-            2 *(cdf(Normal(), -x*root3+dp*root2Over3) + cdf(Normal(), -x*root3-dp*root2Over3)) * pdf(Normal(), x)
+
+    if method == "diff"
+        root3 = sqrt(3)
+        root2Over3 = sqrt(2)/root3
+
+        estdp = function(dp)
+            pr = function(x)
+                2 *(cdf(Normal(), -x*root3+dp*root2Over3) + cdf(Normal(), -x*root3-dp*root2Over3)) * pdf(Normal(), x)
+            end
+            pc - quadgk(pr, 0, Inf)[1]
         end
-        pc - quadgk(pr, 0, Inf)[1]
+
+        dpres = fzero(estdp, [0, 10])
+
+    elseif method == "IO"
+        estdp = function(dp)
+            pr1 = function(x)
+                return  pdf(Normal(), x)* cdf(Normal(), x+dp)^2
+            end
+            pr2 = function(x)
+                return pdf(Normal(), x)*(1-cdf(Normal(), x+dp))^2
+            end
+            return pc - (cdf(Normal(), dp/2)^3 + quadgk(pr1, -Inf, -dp/2)[1] + (1-cdf(Normal(), dp/2))^3 + quadgk(pr2, -dp/2, Inf)[1])
+        end
+        dpres = fzero(estdp, [0, 10])
     end
-
-    dpres = fzero(estdp, [0, 10])
-
+    
     return dpres
-end
+end 
 
 @doc doc"""
+### dprimeYesNo(H::Real, FA::Real)
+
 Compute d' for one interval "yes/no" type tasks from hits and false alarm rates.
 
 #### Arguments
@@ -166,6 +192,8 @@ end
 
 
 @doc doc"""
+### dprimeSD(H::Real, FA::Real, method::ASCIIString)
+
 Compute d' for one interval same/different task from 'hit' and 'false alarm' rates.
 
 ##### Arguments
@@ -184,7 +212,7 @@ Compute d' for one interval same/different task from 'hit' and 'false alarm' rat
     dp = dprimeSD(0.7, 0.2, "IO")
     #differencing model
     dp = dprimeSD(0.7, 0.2, "diff")
-""" ->
+"""->
 function dprimeSD(H::Real, FA::Real, method::ASCIIString)
 
     if H < 0 || H > 1
