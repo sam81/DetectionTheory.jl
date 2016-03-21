@@ -1,38 +1,60 @@
 library(psyphy)
 library(rhdf5)
+t1 = Sys.time()
 
-unlink("table_ABX.h5")
-h5createFile("table_ABX.h5")
+fName = "table_ABX.h5"
 
-testType = "short"
+gridStep = 0.01
+minHR = 0; maxHR=1
 
-if (testType == "short"){
-    PH = seq(0.01, 0.99, 0.01)
-    PF = seq(0.01, 0.99, 0.01)
-} else if (testType == "long"){
-    PH = seq(0.001, 0.999, 0.001)
-    PF = seq(0.001, 0.999, 0.001)
-}
+try(file.remove(fName))
+HR = seq(minHR, maxHR, gridStep) #hit rate values for which d' should be computed
+n = length(HR)*(length(HR)+1)/2
+HR_arr = numeric(n)
+FAR_arr = numeric(n)
+dp_IO_arr = numeric(n)
+dp_diff_arr = numeric(n)
+HR_arr[] = NaN
+FAR_arr[] = NaN
+dp_IO_arr[] = NaN
+dp_diff_arr[] = NaN
 
-
-nPH = length(PH); nPF = length(PF); nTot = nPH*nPF
-dpIO = numeric(nTot)
-dpDiff = numeric(nTot)
-cnt = 0
-for (i in 1:nPH){
-    thisPH = PH[i]
-    for (j in 1:nPF){
-        thisPF = PF[j]
+cnt = 1
+for (k in 1:length(HR)){
+    thisHR = HR[k]
+    FAR = seq(minHR, thisHR, gridStep)
+    for (l in 1:length(FAR)){
+        thisFAR = FAR[l]
+        HR_arr[cnt] = thisHR
+        FAR_arr[cnt] = thisFAR
         cnt = cnt+1
-        if (thisPH >= thisPF){
-            dpIO[cnt] = dprime.ABX(thisPH, thisPF, method="IO")
-            dpDiff[cnt] = dprime.ABX(thisPH, thisPF, method="diff")
-        } else {
-            dpIO[cnt] = - dprime.ABX(thisPF, thisPH, method="IO")
-            dpDiff[cnt] = - dprime.ABX(thisPF, thisPH, method="diff")
-        }
     }
 }
 
-h5write(dpIO, "table_ABX.h5","dpIO")
-h5write(dpDiff, "table_ABX.h5","dpDiff")
+for (i in 1:length(HR_arr)){
+    thisHR = HR_arr[i]; thisFAR = FAR_arr[i]
+    dp_diff = try(dprime.ABX(thisHR, thisFAR, method="diff"), silent=T)
+
+    if (class(dp_diff) == "try-error"){
+        print(paste("diff", thisHR, thisFAR, sep=" "))
+    } else {
+        dp_diff_arr[i] = dp_diff
+    }
+
+    dp_IO = try(dprime.ABX(thisHR, thisFAR, method="IO"), silent=T)
+    if (class(dp_IO) == "try-error"){
+        print(paste("IO", thisHR, thisFAR, sep=" "))
+    } else {
+        dp_IO_arr[i] = dp_IO
+    }
+}
+       
+
+h5createFile(fName)
+h5write(HR_arr, fName,"HR")
+h5write(FAR_arr, fName,"FA")
+h5write(dp_diff_arr, fName,"dp_diff")
+h5write(dp_IO_arr, fName,"dp_IO")
+        
+t2 = Sys.time()
+print(t2-t1)

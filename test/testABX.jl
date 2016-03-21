@@ -1,49 +1,60 @@
 using Base.Test, SDT, HDF5
 
-testType = "short"
+fName = "table_ABX.h5"
 
-if testType == "short"
-    PH = collect(0.01:0.01:0.99)
-    PF = collect(0.01:0.01:0.99)
-elseif testType == "long"
-    PH = collect(0.001:0.001:0.999)
-    PF = collect(0.001:0.001:0.999)
-end
+gridStep = 0.01
+minHR = 0; maxHR=1
 
-nPH = length(PH); nPF = length(PF); nTot=nPH*nPF
-dpIO = zeros(nTot)
-dpDiff = zeros(nTot)
-PHList = zeros(nTot)
-PFList = zeros(nTot)
-cnt = 0
-for i=1:nPH
-    thisPH = PH[i]
-    for j=1:nPF
-        thisPF = PF[j]
+
+HR = collect(minHR:gridStep:maxHR)
+n = round(Int, length(HR)*(length(HR)+1)/2)
+dp_IO_arr = zeros(n); #dp_IO_arr[1:end] = NaN
+dp_diff_arr = zeros(n); #dp_diff_arr[1:end] = NaN
+HR_arr = zeros(n)
+FAR_arr = zeros(n)
+
+cnt = 1
+for k=1:length(HR)
+    thisHR = HR[k]
+    FAR = collect(minHR:gridStep:thisHR)
+    for l=1:length(FAR)
+        thisFAR = FAR[l]
+        HR_arr[cnt] = thisHR
+        FAR_arr[cnt] = thisFAR
         cnt = cnt+1
-
-        PHList[cnt] = thisPH
-        PFList[cnt] = thisPF
-        if thisPH >= thisPF
-            dpIO[cnt] = dprimeABX(thisPH, thisPF, "IO")
-            dpDiff[cnt] = dprimeABX(thisPH, thisPF, "diff")
-        elseif thisPH < thisPF
-            dpIO[cnt] = - dprimeABX(thisPF, thisPH, "IO")
-            dpDiff[cnt] = - dprimeABX(thisPF, thisPH, "diff")
-        end
-    end     
+    end
 end
 
-fid = h5open("table_ABX.h5", "r")
-psi_dp_IO = read(fid["dpIO"])
-psi_dp_diff = read(fid["dpDiff"])
+
+
+
+
+for i=1:length(HR_arr)
+    thisHR = HR_arr[i]; thisFAR = FAR_arr[i]
+    try
+        dp_IO_arr[i] = dprimeABX(thisHR, thisFAR, "IO")
+    catch
+        dp_IO_arr[i] = NaN
+    end
+
+    try
+        dp_diff_arr[i] = dprimeABX(thisHR, thisFAR, "diff")
+    catch
+        dp_diff_arr[i] = NaN
+    end
+end
+
+
+fid = h5open(fName, "r")
+psi_dp_IO = read(fid["dp_IO"])
+psi_dp_diff = read(fid["dp_diff"])
 
 ## maximum(abs(dpDiff .- psi_dp_diff))
 ## find(abs(dpDiff .- psi_dp_diff) .== maximum(abs(dpDiff .- psi_dp_diff)))
 ## find(abs(dpIO .- psi_dp_IO) .== maximum(abs(dpIO .- psi_dp_IO)))
 
-@test_approx_eq_eps(dpIO, psi_dp_IO, 1e-4)
-@test_approx_eq_eps(dpDiff, psi_dp_diff, 1e-4)
+@test_approx_eq_eps(dp_IO_arr, psi_dp_IO, 1e-4)
+@test_approx_eq_eps(dp_diff_arr, psi_dp_diff, 1e-4)
 
 ## for i=1:length(nTot)
 ##     @test abs(dpIO[i] - psi_dp_IO[i]) < 1e-4

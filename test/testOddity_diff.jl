@@ -1,14 +1,9 @@
 using Base.Test, SDT, HDF5
 
-testType = "short"
+gridStep = 0.01
 
-if testType == "short"
-    PC = collect((1/3)+0.01: 0.01: 0.99)
-elseif testType == "long"
-    PC = collect((1/3)+0.001: 0.001: 0.999)
-end
+PC = collect((1/3)+gridStep: gridStep: 1-gridStep)
 nPC = length(PC)
-
 dpOddity = zeros(nPC)
 
 for i=1:nPC

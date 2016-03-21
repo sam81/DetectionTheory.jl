@@ -4,13 +4,9 @@ library(rhdf5)
 unlink("table_mAFC.h5")
 h5createFile("table_mAFC.h5")
 
-testType = "short"
+gridStep = 0.01
 
-if (testType == "short"){
-    PC = seq(0.01, 0.99, 0.01)
-} else if (testType == "long"){
-    PC = seq(0.001, 0.999, 0.001)
-}
+PC = seq(0+gridStep, 1-gridStep, gridStep)
 
 nPC = length(PC)
 alt = seq(2, 10, 1)

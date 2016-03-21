@@ -4,13 +4,8 @@ library(rhdf5)
 unlink("table_oddity.h5")
 h5createFile("table_oddity.h5")
 
-testType = "short"
-
-if (testType == "short"){
-    PC = seq((1/3)+0.01, 0.99, 0.01)
-} else if (testType == "long"){
-    PC = seq((1/3)+0.001, 0.999, 0.001)
-}
+gridStep = 0.01
+PC = seq((1/3)+gridStep, 1-gridStep, gridStep)
 
 nPC = length(PC)
 dpOddity = numeric(nPC)

@@ -1,7 +1,8 @@
 
 include("testABX.jl")
 include("testMAFC.jl")
-include("testOddity.jl")
-include("testOddity2.jl")
+include("testOddity_diff.jl")
+include("testOddity_IO_diff.jl")
 include("testSD.jl")
+include("testYesNo.jl")
  

@@ -1,5 +1,6 @@
 using Base.Test, SDT
 
+#test SDT.jl results against d-prime oddity table in Macmillan & Creelman
 dats, datsHead = readdlm("dprime_oddity_table.txt", ' ', header=true)
 dats=dats[2:end,:]
 

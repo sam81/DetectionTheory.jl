@@ -1,12 +1,7 @@
 using Base.Test, SDT, HDF5
 
-testType = "short"
-
-if testType == "short"
-    PC = collect(0.01:0.01:0.99)
-elseif testType == "long"
-    PC = collect(0.001:0.001:0.999)
-end
+gridStep = 0.01
+PC = collect(0+gridStep:gridStep:1-gridStep)
 
 nPC = length(PC)
 alt = collect(2:1:10)

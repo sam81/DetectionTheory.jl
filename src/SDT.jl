@@ -1,3 +1,19 @@
+# -*- coding: utf-8 -*-
+#   Copyright (C) 2015-2016 Samuele Carcagno <sam.carcagno@gmail.com>
+#   This file is part of SDT.jl
+
+#    SDT.jl is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+
+#    SDT.jl is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+
+#    You should have received a copy of the GNU General Public License
+#    along with SDT.jl.  If not, see <http://www.gnu.org/licenses/>.
 
 module SDT
 
@@ -22,12 +38,18 @@ Compute d' for an ABX task from 'hit' and 'false alarm' rates.
 
 * `dprime::Real`: d' value
 
+##### References
+
+* Macmillan, N. A., & Creelman, C. D. (2004). _Detection Theory: A User’s Guide (2nd ed.)_. London: Lawrence Erlbraum Associates.
+
 ##### Examples
 
+```julia
     #independent observations model
     dp = dprimeABX(0.7, 0.2, "IO")
     #differencing model
     dp = dprimeABX(0.7, 0.2, "diff")
+```
 """->
 function dprimeABX(H::Real, FA::Real, method::ASCIIString)
 
@@ -41,8 +63,8 @@ function dprimeABX(H::Real, FA::Real, method::ASCIIString)
     zdiff = quantile(Normal(), H) - quantile(Normal(), FA)
     pcUnb = cdf(Normal(), zdiff/2)
 
-    if pcUnb < 0.5
-        error("H must be greater than FA")
+    if (pcUnb < 0.5) || (isnan(pcUnb))
+        error("H must be >= FA and unbiased PC must be > 0.5")
     end
     root2 = sqrt(2)
     if method == "diff"
@@ -77,9 +99,16 @@ responses in m-AFC tasks.
 
 * `dprime::Real`: d' value
 
+##### References
+
+* Green, D. M., & Swets, J. A. (1988). _Signal Detection Theory and Psychophysics_. Los Altos, California: Peninsula Publishing.
+* Green, D. M., & Dai, H. P. (1991). Probability of being correct with 1 of M orthogonal signals. _Perception & Psychophysics, 49(1)_, 100–101.
+
 ##### Examples
 
+```julia
     dp = dprimeMAFC(0.7, 3)
+```
 
 """->
 function dprimeMAFC(pc::Real, m::Integer)
@@ -116,10 +145,17 @@ Compute d' for an odd-one-out task.
 
 * `dprime::Real`: d' value
 
+##### References
+
+* Macmillan, N. A., & Creelman, C. D. (2004). _Detection Theory: A User’s Guide (2nd ed.)_. London: Lawrence Erlbraum Associates.
+* Versfeld, N. J., Dai, H., & Green, D. M. (1996). The optimum decision rules for the oddity task. _Perception & Psychophysics, 58(1)_, 10–21.
+
 ##### Examples
 
+```julia
     dp = dprimeOddity(0.7, "diff")
     dp = dprimeOddity(0.7, "IO")
+```
 
 """->
 
@@ -163,18 +199,25 @@ end
 
 Compute d' for one interval "yes/no" type tasks from hits and false alarm rates.
 
-#### Arguments
+##### Arguments
 
 * `H::Real`: Hit rate.
 * `FA::Real`: False alarms rate.
 
-#### Returns
+##### Returns
 
 * `dprime::Real`: d' value
 
-#### Examples
+##### References
 
+* Green, D. M., & Swets, J. A. (1988). _Signal Detection Theory and Psychophysics_. Los Altos, California: Peninsula Publishing.
+* Macmillan, N. A., & Creelman, C. D. (2004). _Detection Theory: A User’s Guide (2nd ed.)_. London: Lawrence Erlbraum Associates.
+
+##### Examples
+
+```julia
     dp = dprimeYesNo(0.7, 0.2)
+```
 
 """->
 function dprimeYesNo(H::Real, FA::Real)
@@ -206,12 +249,19 @@ Compute d' for one interval same/different task from 'hit' and 'false alarm' rat
 
 * `dprime::Real`: d' value
 
+##### References
+
+* Macmillan, N. A., & Creelman, C. D. (2004). _Detection Theory: A User’s Guide (2nd ed.)_. London: Lawrence Erlbraum Associates.
+* Kingdom, F. A. A., & Prins, N. (2010). _Psychophysics: A Practical Introduction_. Academic Press.
+
 ##### Examples
 
+```julia
     #independent observations model
     dp = dprimeSD(0.7, 0.2, "IO")
     #differencing model
     dp = dprimeSD(0.7, 0.2, "diff")
+```
 """->
 function dprimeSD(H::Real, FA::Real, method::ASCIIString)
 
@@ -234,13 +284,13 @@ function dprimeSD(H::Real, FA::Real, method::ASCIIString)
     elseif method == "IO"
         zdiff = quantile(Normal(), H) - quantile(Normal(), FA)
         pcMax = cdf(Normal(), zdiff/2)
-        dp_sign = sign(pcMax - 0.5)
+        #dp_sign = sign(pcMax - 0.5)
         if pcMax < 0.5
             val = 2 * quantile(Normal(), 0.5 * (1 + sqrt(2 * (1 - pcMax) - 1)))
         else
             val = 2 * quantile(Normal(), 0.5 * (1 + sqrt(2 * pcMax - 1)))
         end
-        dprime = dp_sign*val
+        dprime = val #dp_sign*val
     else
         error("`method` must be either 'diff', or 'IO'")
     end
