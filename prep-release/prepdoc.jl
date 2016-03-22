@@ -1,8 +1,8 @@
-using SDT, Lexicon
+using DetectionTheory, Lexicon
 include("extract_docstrings.jl")
 
-#Lexicon.save("docs/API.md", SDT)
-extract_docstrings(["../src/SDT.jl"], "../docs/API.md")
+#Lexicon.save("docs/API.md", DetectionTheory)
+extract_docstrings(["../src/DetectionTheory.jl"], "../docs/API.md")
 cd("../")
 run(`mkdocs build`)
 cd("prep-release")

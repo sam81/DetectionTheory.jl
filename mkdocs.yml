@@ -1,4 +1,4 @@
-site_name: SDT.jl
+site_name: DetectionTheory.jl
 theme: readthedocs
 pages:
     - Introduction: 'index.md'

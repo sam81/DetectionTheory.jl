@@ -1,6 +1,6 @@
-using Base.Test, SDT
+using Base.Test, DetectionTheory
 
-#test SDT.jl results against d-prime oddity table in Macmillan & Creelman
+#test DetectionTheory.jl results against d-prime oddity table in Macmillan & Creelman
 dats, datsHead = readdlm("dprime_oddity_table.txt", ' ', header=true)
 dats=dats[2:end,:]
 

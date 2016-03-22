@@ -1,4 +1,4 @@
-using Base.Test, SDT, HDF5
+using Base.Test, DetectionTheory, HDF5
 
 gridStep = 0.01
 

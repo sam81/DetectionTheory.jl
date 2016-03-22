@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 #   Copyright (C) 2015-2016 Samuele Carcagno <sam.carcagno@gmail.com>
-#   This file is part of SDT.jl
+#   This file is part of DetectionTheory.jl
 
-#    SDT.jl is free software: you can redistribute it and/or modify
+#    DetectionTheory.jl is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    SDT.jl is distributed in the hope that it will be useful,
+#    DetectionTheory.jl is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with SDT.jl.  If not, see <http://www.gnu.org/licenses/>.
+#    along with DetectionTheory.jl.  If not, see <http://www.gnu.org/licenses/>.
 
-module SDT
+module DetectionTheory
 
 export dprimeABX, dprimeMAFC, dprimeOddity, dprimeYesNo, dprimeSD
 

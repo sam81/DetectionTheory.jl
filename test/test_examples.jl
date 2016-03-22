@@ -1,6 +1,6 @@
-using SDT
+using DetectionTheory
 
-fToProcess = ["SDT.jl"]
+fToProcess = ["DetectionTheory.jl"]
 for fName in fToProcess
     fIn = open(string("../src/", fName), "r")
     fOut = open(string("test_", fName), "w")
