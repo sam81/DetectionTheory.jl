@@ -1,4 +1,4 @@
-DetectionTheory.jl is a [Julia](http://www.julialang.org) package to compute signal detection theory measures. It includes functions to compute _d'_ for the following tasks:
+`DetectionTheory.jl` is a [Julia](http://www.julialang.org) package to compute signal detection theory measures. It includes functions to compute _d'_ for the following tasks:
 
 - ABX
 - Multiple alternatives forced choice
