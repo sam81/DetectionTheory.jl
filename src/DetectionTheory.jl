@@ -72,8 +72,8 @@ function dprimeABX(H::Real, FA::Real, method::ASCIIString)
         estdp(dp) = pcUnb - cdf(Normal(), dp/root2)*cdf(Normal(), dp/root6)-cdf(Normal(), -dp/root2)*cdf(Normal(), -dp/root6)
         dprime = fzero(estdp, [0, 10])
     elseif method == "IO"
-        estdp(dp) = pcUnb - cdf(Normal(), dp/root2)*cdf(Normal(), dp/2) - cdf(Normal(), -dp/root2)*cdf(Normal(), -dp/2)
-        dprime = fzero(estdp, [0, 10])
+        estdp2(dp) = pcUnb - cdf(Normal(), dp/root2)*cdf(Normal(), dp/2) - cdf(Normal(), -dp/root2)*cdf(Normal(), -dp/2)
+        dprime = fzero(estdp2, [0, 10])
     else
         error("`method` must be either 'diff', or 'IO'")
     end
