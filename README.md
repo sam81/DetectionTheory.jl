@@ -8,4 +8,4 @@
 
 Most of the functions have been ported from the [psyphy](http://cran.r-project.org/web/packages/psyphy/index.html) R package.
 
-Documentation is available on [readthedocs](http://sdtjl.readthedocs.org/en/latest/)
+Documentation is available on [readthedocs](http://sdtjl.readthedocs.io/en/latest/)

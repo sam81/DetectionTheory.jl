@@ -22,9 +22,11 @@ export dprimeABX, dprimeMAFC, dprimeOddity, dprimeYesNo, dprimeSD
 using Distributions
 using Roots
 VERSION < v"0.4-" && using Docile
+using Compat
+import Compat.String
 
 @doc doc"""
-### dprimeABX(H::Real, FA::Real, method::ASCIIString)
+### dprimeABX(H::Real, FA::Real, method::String)
 
 Compute d' for an ABX task from 'hit' and 'false alarm' rates.
 
@@ -32,7 +34,7 @@ Compute d' for an ABX task from 'hit' and 'false alarm' rates.
 
 * `H::Real`: Hit rate.
 * `FA::Real` : False alarm rate.
-* `method::ASCIIString`: 'diff' for differencing strategy or 'IO' for independent observations strategy.
+* `method::String`: 'diff' for differencing strategy or 'IO' for independent observations strategy.
 
 ##### Returns
 
@@ -51,7 +53,7 @@ Compute d' for an ABX task from 'hit' and 'false alarm' rates.
     dp = dprimeABX(0.7, 0.2, "diff")
 ```
 """->
-function dprimeABX(H::Real, FA::Real, method::ASCIIString)
+function dprimeABX(H::Real, FA::Real, method::String)
 
     if H < 0 || H > 1
         error("H must be between 0 and 1")
@@ -132,14 +134,14 @@ function dprimeMAFC(pc::Real, m::Integer)
 end
 
 @doc doc"""
-### dprimeOddity(pc::Real, method::ASCIIString)
+### dprimeOddity(pc::Real, method::String)
 
 Compute d' for an odd-one-out task.
 
 ##### Arguments
 
 * `pc::Real`: Proportion of correct responses.
-* `method::ASCIIString`: 'diff' for differencing strategy or 'IO' for independent observations strategy.
+* `method::String`: 'diff' for differencing strategy or 'IO' for independent observations strategy.
 
 ##### Returns
 
@@ -159,7 +161,7 @@ Compute d' for an odd-one-out task.
 
 """->
 
-function dprimeOddity(pc::Real, method::ASCIIString)
+function dprimeOddity(pc::Real, method::String)
 
     if pc < 1/3
         error("pc must be greater than 1/3")
@@ -235,7 +237,7 @@ end
 
 
 @doc doc"""
-### dprimeSD(H::Real, FA::Real, method::ASCIIString)
+### dprimeSD(H::Real, FA::Real, method::String)
 
 Compute d' for one interval same/different task from 'hit' and 'false alarm' rates.
 
@@ -243,7 +245,7 @@ Compute d' for one interval same/different task from 'hit' and 'false alarm' rat
 
 * `H::Real`: Hit rate.
 * `FA::Real` : False alarm rate.
-* `method::ASCIIString`: 'diff' for differencing strategy or 'IO' for independent observations strategy.
+* `method::String`: 'diff' for differencing strategy or 'IO' for independent observations strategy.
 
 ##### Returns
 
@@ -263,7 +265,7 @@ Compute d' for one interval same/different task from 'hit' and 'false alarm' rat
     dp = dprimeSD(0.7, 0.2, "diff")
 ```
 """->
-function dprimeSD(H::Real, FA::Real, method::ASCIIString)
+function dprimeSD(H::Real, FA::Real, method::String)
 
     if H < 0 || H > 1
         error("H must be between 0 and 1")
