@@ -25,7 +25,7 @@ for k=1:length(HR)
     end
 end
 
-
+@test dprimeSD(0.8, 0.6, "IO") == - dprimeSD(0.6, 0.8, "IO")
 
 
 
