@@ -163,8 +163,8 @@ Compute d' for an odd-one-out task.
 
 function dprimeOddity(pc::Real, method::String)
 
-    if pc < 1/3
-        error("pc must be greater than 1/3")
+    if pc < 1/3 || pc >= 1
+        error("pc must be greater than 1/3 and less than 1")
     end
 
     if method == "diff"
@@ -286,13 +286,13 @@ function dprimeSD(H::Real, FA::Real, method::String)
     elseif method == "IO"
         zdiff = quantile(Normal(), H) - quantile(Normal(), FA)
         pcMax = cdf(Normal(), zdiff/2)
-        #dp_sign = sign(pcMax - 0.5)
+        dp_sign = sign(pcMax - 0.5)
         if pcMax < 0.5
             val = 2 * quantile(Normal(), 0.5 * (1 + sqrt(2 * (1 - pcMax) - 1)))
         else
             val = 2 * quantile(Normal(), 0.5 * (1 + sqrt(2 * pcMax - 1)))
         end
-        dprime = val #dp_sign*val
+        dprime = dp_sign*val
     else
         error("`method` must be either 'diff', or 'IO'")
     end
