@@ -1,3 +1,9 @@
+DetectionTheory.jl
+==================
+
+[![DetectionTheory](http://pkg.julialang.org/badges/DetectionTheory_0.4.svg)](http://pkg.julialang.org/?pkg=DetectionTheory)
+[![Coverage Status](https://coveralls.io/repos/github/sam81/DetectionTheory.jl/badge.svg?branch=master)](https://coveralls.io/github/sam81/DetectionTheory.jl?branch=master)
+
 `DetectionTheory.jl` is a [Julia](http://www.julialang.org) package to compute signal detection theory measures. It includes functions to compute _d'_ for the following tasks:
 
 - ABX
