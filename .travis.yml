@@ -7,3 +7,6 @@ julia:
     - nightly
 notifications:
     email: false
+
+after_success:
+- julia -e 'cd(Pkg.dir("DetectionTheory")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(process_folder())'
