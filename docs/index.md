@@ -39,19 +39,19 @@ A few usage examples for `DetectionTheory` functions are given in the next secti
 ## Examples
 
 
-Compute _d'_ for an ABX task when the observer with a hit rate of 0.8 and a false alarm rate of 0.4. If we assume that the observer is following a differencing strategy, we can compute _d'_ with:
+Compute _d'_ for an ABX task for an observer with a hit rate of 0.8 and a false alarm rate of 0.4. If we assume that the observer is following a differencing strategy, we can compute _d'_ with:
 
 ```julia
 dprimeABX(0.8, 0.4, "diff")
 ```
 
-if we assume that the observer is using the independent observations strategy instead, we can compute _d'_ with:
+if we assume that the observer is using an independent observations strategy instead, we can compute _d'_ with:
 
 ```julia
 dprimeABX(0.8, 0.4, "IO")
 ```
 
-_d'_ for the same-different and odd-one-out tasks can also be computed for the differencing of independent observations strategies. For an observer with a hit rate of 0.7 and a false alarm rate of 0.2 in the same-different task:
+_d'_ for the same-different and odd-one-out tasks can also be computed for either the differencing, or the independent observations strategies. For an observer with a hit rate of 0.7 and a false alarm rate of 0.2 in the same-different task:
 
 ```julia
 dprimeSD(0.7, 0.2, "diff") #differencing strategy

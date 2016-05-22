@@ -2,8 +2,6 @@ DetectionTheory.jl
 ==================
 
 [![DetectionTheory](http://pkg.julialang.org/badges/DetectionTheory_0.4.svg)](http://pkg.julialang.org/?pkg=DetectionTheory)
-[![DetectionTheory](http://pkg.julialang.org/badges/DetectionTheory_0.5.svg)](http://pkg.julialang.org/?pkg=DetectionTheory&ver=0.5)
-
 [![Build Status](https://travis-ci.org/sam81/DetectionTheory.jl.svg?branch=master)](https://travis-ci.org/sam81/DetectionTheory.jl)
 [![Coverage Status](https://coveralls.io/repos/github/sam81/DetectionTheory.jl/badge.svg?branch=master)](https://coveralls.io/github/sam81/DetectionTheory.jl?branch=master)
 
