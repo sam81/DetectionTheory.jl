@@ -1,5 +1,5 @@
 site_name: DetectionTheory.jl
-theme: readthedocs
+theme_dir: cinder
 repo_url: https://github.com/sam81/DetectionTheory.jl
 
 extra_css:
