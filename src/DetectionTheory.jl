@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2015-2016 Samuele Carcagno <sam.carcagno@gmail.com>
+#   Copyright (C) 2015-2017 Samuele Carcagno <sam.carcagno@gmail.com>
 #   This file is part of DetectionTheory.jl
 
 #    DetectionTheory.jl is free software: you can redistribute it and/or modify
@@ -19,16 +19,15 @@ module DetectionTheory
 
 export dprimeABX, dprimeMAFC, dprimeOddity, dprimeYesNo, dprimeSD
 
-using Distributions
-using Roots
+using DocStringExtensions, Distributions, Roots
 VERSION < v"0.4-" && using Docile
 using Compat
 import Compat.String
 
-@doc doc"""
-### dprimeABX(H::Real, FA::Real, method::String)
-
+"""
 Compute d' for an ABX task from 'hit' and 'false alarm' rates.
+
+$(SIGNATURES)
 
 ##### Arguments
 
@@ -52,7 +51,7 @@ Compute d' for an ABX task from 'hit' and 'false alarm' rates.
     #differencing model
     dp = dprimeABX(0.7, 0.2, "diff")
 ```
-"""->
+"""
 function dprimeABX(H::Real, FA::Real, method::String)
 
     if H < 0 || H > 1
@@ -86,11 +85,11 @@ end
 
 
 
-@doc doc"""
-### dprimeMAFC(pc::Real, m::Integer)
-
+"""
 Compute d' corresponding to a certain proportion of correct
 responses in m-AFC tasks.
+
+$(SIGNATURES)
 
 ##### Arguments
 
@@ -112,7 +111,7 @@ responses in m-AFC tasks.
     dp = dprimeMAFC(0.7, 3)
 ```
 
-"""->
+"""
 function dprimeMAFC(pc::Real, m::Integer)
 
     if m < 2
@@ -133,10 +132,10 @@ function dprimeMAFC(pc::Real, m::Integer)
     return dprime
 end
 
-@doc doc"""
-### dprimeOddity(pc::Real, method::String)
-
+"""
 Compute d' for an odd-one-out task.
+
+$(SIGNATURES)
 
 ##### Arguments
 
@@ -159,7 +158,7 @@ Compute d' for an odd-one-out task.
     dp = dprimeOddity(0.7, "IO")
 ```
 
-"""->
+"""
 
 function dprimeOddity(pc::Real, method::String)
 
@@ -196,10 +195,10 @@ function dprimeOddity(pc::Real, method::String)
     return dpres
 end 
 
-@doc doc"""
-### dprimeYesNo(H::Real, FA::Real)
-
+"""
 Compute d' for one interval "yes/no" type tasks from hits and false alarm rates.
+
+$(SIGNATURES)
 
 ##### Arguments
 
@@ -221,7 +220,7 @@ Compute d' for one interval "yes/no" type tasks from hits and false alarm rates.
     dp = dprimeYesNo(0.7, 0.2)
 ```
 
-"""->
+"""
 function dprimeYesNo(H::Real, FA::Real)
     if H < 0 || H > 1
         error("H must be between 0 and 1")
@@ -236,10 +235,10 @@ function dprimeYesNo(H::Real, FA::Real)
 end
 
 
-@doc doc"""
-### dprimeSD(H::Real, FA::Real, method::String)
-
+"""
 Compute d' for one interval same/different task from 'hit' and 'false alarm' rates.
+
+$(SIGNATURES)
 
 ##### Arguments
 
@@ -264,7 +263,7 @@ Compute d' for one interval same/different task from 'hit' and 'false alarm' rat
     #differencing model
     dp = dprimeSD(0.7, 0.2, "diff")
 ```
-"""->
+"""
 function dprimeSD(H::Real, FA::Real, method::String)
 
     if H < 0 || H > 1

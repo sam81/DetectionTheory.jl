@@ -1,6 +1,0 @@
-site_name: DetectionTheory.jl
-theme: readthedocs
-pages:
-    - Introduction: 'index.md'
-    - Function Reference: 'API.md'
-
