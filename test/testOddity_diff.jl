@@ -14,3 +14,4 @@ fid = h5open("table_oddity.h5", "r")
 psi_dp = read(fid["dp"])
 
 @test_approx_eq_eps(dpOddity, psi_dp, 1e-4)
+#@test dpOddity ≈ psi_dp atol=1e-4

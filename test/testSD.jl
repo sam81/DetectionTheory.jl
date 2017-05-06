@@ -55,6 +55,8 @@ psi_dp_diff = read(fid["dp_diff"])
 
 @test_approx_eq_eps(dp_IO_arr, psi_dp_IO, 1e-4)
 @test_approx_eq_eps(dp_diff_arr, psi_dp_diff, 1e-4)
+## @test dp_IO_arr ≈ psi_dp_IO atol=1e-4
+## @test dp_diff_arr ≈ psi_dp_diff atol=1e-4
 
 ## for i=1:length(nTot)
 ##     @test abs(dpIO[i] - psi_dp_IO[i]) < 1e-4

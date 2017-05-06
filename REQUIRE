@@ -3,5 +3,6 @@ Compat 0.7.18
 Distributions
 DocStringExtensions
 HDF5
+QuadGK
 Roots
 

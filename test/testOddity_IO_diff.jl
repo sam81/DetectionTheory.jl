@@ -18,3 +18,5 @@ dpIOJulia = round(dpIOJulia, 1)
 
 @test_approx_eq_eps(dpDiffJulia, dats[:,1], 1e-4)
 @test_approx_eq_eps(dpIOJulia, dats[:,1], 1e-4)
+## @test dpDiffJulia ≈ dats[:,1] atol=1e-4
+## @test dpIOJulia ≈ dats[:,1] atol=1e-4
