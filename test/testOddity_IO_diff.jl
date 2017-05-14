@@ -13,10 +13,13 @@ for i=1:n
     dpIOJulia[i] =  dprimeOddity(dats[i,3], "IO")
 end
 
-dpDiffJulia = round(dpDiffJulia, 1)
-dpIOJulia = round(dpIOJulia, 1)
+dpDiffJulia = round.(dpDiffJulia, 1)
+dpIOJulia = round.(dpIOJulia, 1)
 
-@test_approx_eq_eps(dpDiffJulia, dats[:,1], 1e-4)
-@test_approx_eq_eps(dpIOJulia, dats[:,1], 1e-4)
-## @test dpDiffJulia ≈ dats[:,1] atol=1e-4
-## @test dpIOJulia ≈ dats[:,1] atol=1e-4
+## @test_approx_eq_eps(dpDiffJulia, dats[:,1], 1e-4)
+## @test_approx_eq_eps(dpIOJulia, dats[:,1], 1e-4)
+## @test dpDiffJulia ≈ dats[:,1] atol=1e-4 nans=true
+## @test dpIOJulia ≈ dats[:,1] atol=1e-4 nans=true
+
+@test isequal(dpDiffJulia, dats[:,1])
+@test isequal(dpIOJulia, dats[:,1])

@@ -18,7 +18,7 @@ end
 fid = h5open("table_mAFC.h5", "r")
 psi_dp = read(fid["dp"])
 
-@test_approx_eq_eps(dps, psi_dp, 1e-3)
-#@test dps ≈ psi_dp atol=1e-3
+#@test_approx_eq_eps(dps, psi_dp, 1e-3)
+@test dps ≈ psi_dp atol=1e-3 nans=true
 
 

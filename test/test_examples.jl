@@ -8,14 +8,16 @@ for fName in fToProcess
     idxStart = (Int)[]
     idxStop = (Int)[]
     for i=1:length(lns)
-        if lns[i] == "```julia\n"
+        if lns[i] == "```julia"
             push!(idxStart, i+1)
-        elseif lns[i] == "```\n"
+        elseif lns[i] == "```"
             push!(idxStop, i-1)
         end
     end
     for i=1:length(idxStart)
-        write(fOut, lns[idxStart[i]:idxStop[i]])
+        for j=idxStart[i]:idxStop[i]
+            write(fOut, lns[j]*"\n")
+        end
     end
     close(fIn); close(fOut)
 end

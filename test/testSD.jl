@@ -49,18 +49,34 @@ fid = h5open(fName, "r")
 psi_dp_IO = read(fid["dp_IO"])
 psi_dp_diff = read(fid["dp_diff"])
 
-## maximum(abs(dpDiff .- psi_dp_diff))
-## find(abs(dpDiff .- psi_dp_diff) .== maximum(abs(dpDiff .- psi_dp_diff)))
-## find(abs(dpIO .- psi_dp_IO) .== maximum(abs(dpIO .- psi_dp_IO)))
 
-@test_approx_eq_eps(dp_IO_arr, psi_dp_IO, 1e-4)
-@test_approx_eq_eps(dp_diff_arr, psi_dp_diff, 1e-4)
-## @test dp_IO_arr ≈ psi_dp_IO atol=1e-4
-## @test dp_diff_arr ≈ psi_dp_diff atol=1e-4
+## @test dp_IO_arr ≈ psi_dp_IO atol=1e-4 nans=true
+## @test dp_diff_arr ≈ psi_dp_diff atol=1e-4 nans=true
 
-## for i=1:length(nTot)
-##     @test abs(dpIO[i] - psi_dp_IO[i]) < 1e-4
-##     @test abs(dpDiff[i] - psi_dp_diff[i]) < 1e-4
-## end
-#@test isequal(round(dpIO,6), round(psi_dp_IO, 6))
-#@test isequal(round(dpDiff,6), round(psi_dp_diff, 6))
+@test isequal(isnan.(dp_IO_arr) .== true,  isnan.(psi_dp_IO) .== true)
+@test isequal(isinf.(dp_IO_arr) .== true,  isinf.(psi_dp_IO) .== true)
+
+@test isequal(isnan.(dp_diff_arr) .== true,  isnan.(psi_dp_diff) .== true)
+@test isequal(isinf.(dp_diff_arr) .== true,  isinf.(psi_dp_diff) .== true)
+
+dp_IO_arr_nonan = dp_IO_arr[isnan.(dp_IO_arr) .== false]
+psi_dp_IO_nonan = psi_dp_IO[isnan.(psi_dp_IO) .== false]
+
+dp_diff_arr_nonan = dp_diff_arr[isnan.(dp_diff_arr) .== false]
+psi_dp_diff_nonan = psi_dp_diff[isnan.(psi_dp_diff) .== false]
+
+dp_IO_arr_nonan_noinf = dp_IO_arr_nonan[isinf.(dp_IO_arr_nonan) .== false]
+psi_dp_IO_nonan_noinf = psi_dp_IO_nonan[isinf.(psi_dp_IO_nonan) .== false]
+
+dp_diff_arr_nonan_noinf = dp_diff_arr_nonan[isinf.(dp_diff_arr_nonan) .== false]
+psi_dp_diff_nonan_noinf = psi_dp_diff_nonan[isinf.(psi_dp_diff_nonan) .== false]
+
+for i=1:length(dp_IO_arr_nonan_noinf)
+    @test abs(dp_IO_arr_nonan_noinf[i] - psi_dp_IO_nonan_noinf[i]) < 1e-4
+end
+
+for i=1:length(dp_diff_arr_nonan_noinf)
+    @test abs(dp_diff_arr_nonan_noinf[i] - psi_dp_diff_nonan_noinf[i]) < 1e-4
+end
+
+
