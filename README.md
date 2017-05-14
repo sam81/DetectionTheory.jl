@@ -15,4 +15,4 @@ DetectionTheory.jl
 
 Most of the functions have been ported from the [psyphy](http://cran.r-project.org/web/packages/psyphy/index.html) R package.
 
-Documentation is available on [here](http://samcarcagno.altervista.org/DetectionTheory/index.html)
+Documentation is available [here](http://samcarcagno.altervista.org/DetectionTheory/index.html)
