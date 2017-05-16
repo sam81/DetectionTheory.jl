@@ -20,7 +20,6 @@ module DetectionTheory
 export dprimeABX, dprimeMAFC, dprimeOddity, dprimeYesNo, dprimeSD
 
 using DocStringExtensions, Distributions, Roots
-VERSION < v"0.4-" && using Docile
 using Compat
 import Compat.String
 
