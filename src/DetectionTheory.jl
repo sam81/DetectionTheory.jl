@@ -20,6 +20,7 @@ module DetectionTheory
 export dprimeABX, dprimeMAFC, dprimeOddity, dprimeYesNo, dprimeSD
 
 using DocStringExtensions, Distributions, Roots
+using QuadGK
 using Compat
 import Compat.String
 
@@ -125,7 +126,7 @@ function dprimeMAFC(pc::Real, m::Integer)
         pr = function(x)
             pdf(Normal(), x-dp) * cdf(Normal(), x)^(m-1)
         end
-        pc - quadgk(pr, -Inf, Inf)[1]
+        pc - QuadGK.quadgk(pr, -Inf, Inf)[1]
     end
     dprime = fzero(estdp, [-10, 10])
     return dprime
@@ -173,7 +174,7 @@ function dprimeOddity(pc::Real, method::String)
             pr = function(x)
                 2 *(cdf(Normal(), -x*root3+dp*root2Over3) + cdf(Normal(), -x*root3-dp*root2Over3)) * pdf(Normal(), x)
             end
-            pc - quadgk(pr, 0, Inf)[1]
+            pc - QuadGK.quadgk(pr, 0, Inf)[1]
         end
 
         dpres = fzero(estdp, [0, 10])
@@ -186,7 +187,7 @@ function dprimeOddity(pc::Real, method::String)
             pr2 = function(x)
                 return pdf(Normal(), x)*(1-cdf(Normal(), x+dp))^2
             end
-            return pc - (cdf(Normal(), dp/2)^3 + quadgk(pr1, -Inf, -dp/2)[1] + (1-cdf(Normal(), dp/2))^3 + quadgk(pr2, -dp/2, Inf)[1])
+            return pc - (cdf(Normal(), dp/2)^3 + QuadGK.quadgk(pr1, -Inf, -dp/2)[1] + (1-cdf(Normal(), dp/2))^3 + QuadGK.quadgk(pr2, -dp/2, Inf)[1])
         end
         dpres = fzero(estdp, [0, 10])
     end
