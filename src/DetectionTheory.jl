@@ -20,9 +20,6 @@ module DetectionTheory
 export dprimeABX, dprimeMAFC, dprimeOddity, dprimeYesNo, dprimeSD
 
 using DocStringExtensions, Distributions, QuadGK, Roots
-VERSION < v"0.4-" && using Docile
-using Compat
-import Compat.String
 
 """
 Compute d' for an ABX task from 'hit' and 'false alarm' rates.
