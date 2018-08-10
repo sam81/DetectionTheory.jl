@@ -156,7 +156,6 @@ $(SIGNATURES)
 ```
 
 """
-
 function dprimeOddity(pc::Real, method::String)
 
     if pc < 1/3 || pc >= 1

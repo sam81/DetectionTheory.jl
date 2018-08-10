@@ -1,4 +1,4 @@
-using Base.Test, DetectionTheory, HDF5
+using Test, DetectionTheory, HDF5
 
 fName = "table_ABX.h5"
 
@@ -21,7 +21,7 @@ for k=1:length(HR)
         thisFAR = FAR[l]
         HR_arr[cnt] = thisHR
         FAR_arr[cnt] = thisFAR
-        cnt = cnt+1
+        global cnt = cnt+1
     end
 end
 

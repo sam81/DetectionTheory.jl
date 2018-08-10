@@ -1,4 +1,4 @@
-using Base.Test, DetectionTheory
+using Base, DetectionTheory
 
 @test_throws(ErrorException, dprimeABX(1.1,0.1,"diff"))
 @test_throws(ErrorException, dprimeABX(-0.1,0.1,"diff"))

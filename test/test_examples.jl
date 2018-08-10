@@ -1,9 +1,9 @@
 using DetectionTheory
 
 fToProcess = ["DetectionTheory.jl"]
-for fName in fToProcess
-    fIn = open(string("../src/", fName), "r")
-    fOut = open(string("test_", fName), "w")
+for fNameb in fToProcess
+    fIn = open(string("../src/", fNameb), "r")
+    fOut = open(string("test_", fNameb), "w")
     lns = readlines(fIn)
     idxStart = (Int)[]
     idxStop = (Int)[]
@@ -22,8 +22,8 @@ for fName in fToProcess
     close(fIn); close(fOut)
 end
 
-for fName in fToProcess
-    fNameTest = string("test_", fName)
+for fName2 in fToProcess
+    fNameTest = string("test_", fName2)
     include(fNameTest)
 end
 

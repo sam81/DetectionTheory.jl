@@ -1,4 +1,4 @@
-using Base.Test, DetectionTheory
+using Test, DetectionTheory, DelimitedFiles
 
 #test DetectionTheory.jl results against d-prime oddity table in Macmillan & Creelman
 dats, datsHead = readdlm("dprime_oddity_table.txt", ' ', header=true)
@@ -13,8 +13,8 @@ for i=1:n
     dpIOJulia[i] =  dprimeOddity(dats[i,3], "IO")
 end
 
-dpDiffJulia = round.(dpDiffJulia, 1)
-dpIOJulia = round.(dpIOJulia, 1)
+dpDiffJulia = round.(dpDiffJulia, digits=1)
+dpIOJulia = round.(dpIOJulia, digits=1)
 
 ## @test_approx_eq_eps(dpDiffJulia, dats[:,1], 1e-4)
 ## @test_approx_eq_eps(dpIOJulia, dats[:,1], 1e-4)
