@@ -8,6 +8,11 @@ julia:
     - nightly
 notifications:
     email: false
+addons:
+    apt: # apt-get for linux
+        packages:
+            - hdf5-tools # Install it this way to be able to run Travis with `sudo: false`
+
 
 matrix:
   allow_failures:
