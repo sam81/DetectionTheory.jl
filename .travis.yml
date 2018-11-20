@@ -12,7 +12,9 @@ addons:
     apt: # apt-get for linux
         packages:
             - hdf5-tools # Install it this way to be able to run Travis with `sudo: false`
-
+    homebrew:
+        packages:
+            - hdf5
 
 matrix:
   allow_failures:
