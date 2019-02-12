@@ -1,6 +1,6 @@
-using Documenter
+using Documenter, DocumenterMarkdown, DetectionTheory
 
-if ispath("buld/")
+if ispath("build/")
     rm("build/", recursive=true)
 end
 
@@ -9,5 +9,5 @@ if ispath("site/")
 end
 
 include("runWeave.jl") #convert weave file to markdown
-makedocs()
+makedocs(format = Markdown(), modules = [DetectionTheory], source="src", build="build")
 run(`mkdocs build`)
